@@ -9,7 +9,8 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<maven.compiler.release>11</maven.compiler.release>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
 
 </project>

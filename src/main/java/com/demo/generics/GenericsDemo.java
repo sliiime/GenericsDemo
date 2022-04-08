@@ -10,6 +10,10 @@ public class GenericsDemo {
 
 	}
 
+	private static class CuteCat extends Cat {
+
+	}
+
 	private static class Dog extends Animal {
 
 	}
@@ -40,7 +44,7 @@ public class GenericsDemo {
 		vaccinateAnimals(animals); // this is great, animals container can give Animals
 
 		// ---------- using a consumer ----------
-		// incorrect_addCatToAnyContainerThatCanHaveCats(animals); // does not compile!!
+//		 incorrect_addCatToAnyContainerThatCanHaveCats(animals); // does not compile!!
 		addCatToAnyContainerThatCanHaveCats(cats); // this is great, cats container can also host cats
 		addCatToAnyContainerThatCanHaveCats(animals); // this is great, animals container can also host cats
 
@@ -73,20 +77,21 @@ public class GenericsDemo {
 	// This is much better. Container is a consumer of Cats.
 	private static void addCatToAnyContainerThatCanHaveCats(Container<? super Cat> cats) {
 		cats.set(new Cat());
+		cats.set(new CuteCat());
 		Object object = cats.get();// the compiler doesn't know the type
 									// of the items in the container, it could have anything
 									// which is a superclass of a Cat, so we can only assume it's an Object
 	}
 
 	// parameterized method
-	private static <T extends Animal> void doesntKnowWhatTheContainerIsAtCompileTime(Container<T> c) {
+	private static <R extends Animal> void doesntKnowWhatTheContainerIsAtCompileTime(Container<R> c) {
 		Animal t = c.get(); // great I can get animals
-		T t1 = c.get(); // great I can get T but I don't know what T is at compile time
+		R t1 = c.get(); // great I can get T but I don't know what T is at compile time
 		// c.set(new Animal()); // doesn't compile!!
 		// c.set(new Cat()); // doesn't compile!!
 		// c.set(new Dog()); // doesn't compile!!
 
-		T t3 = somehowGetAnObject(); // if you can somehow get a T
+		R t3 = somehowGetAnObject(); // if you can somehow get a T
 		c.set(t3); // then you can add it
 	}
 
